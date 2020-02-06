@@ -1,0 +1,15 @@
+language: generic
+# Additionally, you may want to set the following property if your travis build fails with “rakefile not found”
+
+
+#We need superuser permissions
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t amirarreaza/docker-react -f Dockerfile.dev .
+
+#Due to a change in how the Jest library works with Create React App, we need to make a small modification
+script:
+  - docker run -e CI=true amirarreaza/docker-react npm run test -- --coverage
