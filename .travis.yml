@@ -1,7 +1,6 @@
 language: generic
 # Additionally, you may want to set the following property if your travis build fails with “rakefile not found”
 
-
 #We need superuser permissions
 sudo: required
 services:
@@ -13,3 +12,22 @@ before_install:
 #Due to a change in how the Jest library works with Create React App, we need to make a small modification
 script:
   - docker run -e CI=true amirarreaza/docker-react npm run test
+
+# In case of missing bucket_name error use edge: true
+#
+# Travis Script Fix for access_key_id
+# access_key_id: $AWS_ACCESS_KEY
+# secret_access_key: $AWS_SECRET_KEY
+
+deploy:
+  provider: elasticbeanstalk
+  region:  "us-east-2"
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-009875185754"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
