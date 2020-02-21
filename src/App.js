@@ -10,6 +10,7 @@ function App() {
         <p>
           Hola Mamosito pesiosa!
           Dame un besito
+          Dame dos besitos
         </p>
         <a
           className="App-link"
